@@ -89,4 +89,3 @@ DD/MM/YYYY, HH:MM - Contact Name: Message content
 - **Temporary Processing**: Data cleared when page refreshes
 \`\`\`
 
-Now let me create a comprehensive README file:
