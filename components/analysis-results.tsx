@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { MessagesChart } from "@/components/messages-chart"
 import { EmojiChart } from "@/components/emoji-chart"
 import type { ChatAnalysis } from "@/lib/chat-analyzer"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 interface AnalysisResultsProps {
   analysis: ChatAnalysis
@@ -45,21 +46,26 @@ export function AnalysisResults({ analysis, onReset }: AnalysisResultsProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <Button variant="outline" onClick={onReset} className="mb-4 bg-transparent">
-            ← Analyze Another Chat
-          </Button>
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Your Love Story Analysis</h1>
-          <p className="text-gray-600">
+          <div className="flex items-center justify-between mb-4">
+            <Button variant="outline" onClick={onReset} className="bg-transparent dark:bg-gray-800/50">
+              ← Analyze Another Chat
+            </Button>
+            <ThemeToggle />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+            Your Love Story Analysis
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300">
             Based on {analysis.totalMessages.toLocaleString()} messages over {analysis.totalDays} days
           </p>
         </div>
 
         {/* Love Score Hero */}
-        <Card className="mb-8 border-0 shadow-2xl bg-white/80 backdrop-blur-sm overflow-hidden">
+        <Card className="mb-8 border-0 shadow-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm overflow-hidden">
           <CardContent className="p-8 text-center relative">
             <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-purple-500/10"></div>
             <div className="relative z-10">
@@ -70,8 +76,10 @@ export function AnalysisResults({ analysis, onReset }: AnalysisResultsProps) {
                   {analysis.loveScore}%
                 </div>
               </div>
-              <h2 className="text-3xl font-bold text-gray-800 mb-2">{getLoveScoreLabel(analysis.loveScore)}</h2>
-              <p className="text-lg text-gray-600 mb-6">Your relationship compatibility score</p>
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-2">
+                {getLoveScoreLabel(analysis.loveScore)}
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">Your relationship compatibility score</p>
               <Button
                 onClick={shareResults}
                 className="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600"
@@ -85,35 +93,39 @@ export function AnalysisResults({ analysis, onReset }: AnalysisResultsProps) {
 
         {/* Key Metrics */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <MessageCircle className="h-8 w-8 text-blue-500 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-gray-800">{analysis.totalMessages.toLocaleString()}</div>
-              <div className="text-sm text-gray-600">Total Messages</div>
+              <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                {analysis.totalMessages.toLocaleString()}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Total Messages</div>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <Calendar className="h-8 w-8 text-green-500 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-gray-800">{analysis.totalDays}</div>
-              <div className="text-sm text-gray-600">Days Chatting</div>
+              <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">{analysis.totalDays}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Days Chatting</div>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <Smile className="h-8 w-8 text-yellow-500 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-gray-800">{analysis.totalEmojis}</div>
-              <div className="text-sm text-gray-600">Emojis Used</div>
+              <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">{analysis.totalEmojis}</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Emojis Used</div>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/80 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <TrendingUp className="h-8 w-8 text-purple-500 mx-auto mb-3" />
-              <div className="text-2xl font-bold text-gray-800">{analysis.averageMessagesPerDay.toFixed(1)}</div>
-              <div className="text-sm text-gray-600">Messages/Day</div>
+              <div className="text-2xl font-bold text-gray-800 dark:text-gray-100">
+                {analysis.averageMessagesPerDay.toFixed(1)}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Messages/Day</div>
             </CardContent>
           </Card>
         </div>
@@ -125,7 +137,7 @@ export function AnalysisResults({ analysis, onReset }: AnalysisResultsProps) {
         </div>
 
         {/* Fun Insights */}
-        <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+        <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/80 backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="flex items-center">
               <Award className="h-5 w-5 mr-2 text-yellow-500" />
@@ -135,29 +147,29 @@ export function AnalysisResults({ analysis, onReset }: AnalysisResultsProps) {
           <CardContent>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-pink-50 to-purple-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 rounded-lg">
                   <span className="font-medium">Most Active Day</span>
                   <Badge variant="secondary">{analysis.insights.mostActiveDay}</Badge>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg">
                   <span className="font-medium">Longest Message Streak</span>
                   <Badge variant="secondary">{analysis.insights.longestStreak} days</Badge>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-teal-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-green-50 to-teal-50 dark:from-green-900/20 dark:to-teal-900/20 rounded-lg">
                   <span className="font-medium">Average Message Length</span>
                   <Badge variant="secondary">{analysis.averageMessageLength} chars</Badge>
                 </div>
               </div>
               <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-lg">
                   <span className="font-medium">Most Used Emoji</span>
                   <Badge variant="secondary">{analysis.insights.topEmoji}</Badge>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg">
                   <span className="font-medium">Love Emojis Used</span>
                   <Badge variant="secondary">{analysis.loveEmojis}</Badge>
                 </div>
-                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-pink-50 rounded-lg">
+                <div className="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 rounded-lg">
                   <span className="font-medium">Chat Consistency</span>
                   <Badge variant="secondary">{analysis.insights.consistency}%</Badge>
                 </div>

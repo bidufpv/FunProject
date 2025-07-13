@@ -16,9 +16,9 @@ export function MessagesChart({ data }: MessagesChartProps) {
   }))
 
   return (
-    <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+    <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="flex items-center">
+        <CardTitle className="flex items-center text-gray-800 dark:text-gray-100">
           <TrendingUp className="h-5 w-5 mr-2 text-blue-500" />
           Messages Over Time
         </CardTitle>
@@ -27,15 +27,19 @@ export function MessagesChart({ data }: MessagesChartProps) {
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" />
-              <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-              <YAxis stroke="#6b7280" fontSize={12} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e0e7ff" className="dark:stroke-gray-600" />
+              <XAxis dataKey="date" stroke="#6b7280" className="dark:stroke-gray-400" fontSize={12} />
+              <YAxis stroke="#6b7280" className="dark:stroke-gray-400" fontSize={12} />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "rgba(255, 255, 255, 0.95)",
                   border: "none",
                   borderRadius: "8px",
                   boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+                }}
+                wrapperStyle={{
+                  backgroundColor: "rgba(31, 41, 55, 0.95)", // dark mode background
+                  color: "#f9fafb", // dark mode text color
                 }}
               />
               <Line

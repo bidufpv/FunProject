@@ -13,12 +13,29 @@ interface ChatUploadProps {
 
 export function ChatUpload({ onFileUpload, isAnalyzing }: ChatUploadProps) {
   const [dragActive, setDragActive] = useState(false)
+  const [fileError, setFileError] = useState<string | null>(null)
 
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: File[], rejectedFiles: any[]) => {
+      setFileError(null)
+
+      if (rejectedFiles.length > 0) {
+        const rejectedFile = rejectedFiles[0]
+        if (rejectedFile.errors.some((e: any) => e.code === "file-invalid-type")) {
+          setFileError(
+            `Invalid file type. Please upload a .txt file from WhatsApp export. You uploaded: ${rejectedFile.file.name}`,
+          )
+        } else {
+          setFileError("File upload failed. Please try again.")
+        }
+        return
+      }
+
       const file = acceptedFiles[0]
       if (file && file.type === "text/plain") {
         onFileUpload(file)
+      } else if (file) {
+        setFileError(`Invalid file type. Please upload a .txt file from WhatsApp export. You uploaded: ${file.name}`)
       }
     },
     [onFileUpload],
@@ -58,8 +75,8 @@ export function ChatUpload({ onFileUpload, isAnalyzing }: ChatUploadProps) {
     <Card
       className={`border-2 border-dashed transition-all duration-200 cursor-pointer ${
         isDragActive || dragActive
-          ? "border-purple-400 bg-purple-50/70 scale-105"
-          : "border-gray-300 bg-white/70 hover:border-purple-300 hover:bg-purple-50/50"
+          ? "border-purple-400 bg-purple-50/70 dark:bg-purple-900/20 scale-105"
+          : "border-gray-300 dark:border-gray-600 bg-white/70 dark:bg-gray-800/70 hover:border-purple-300 hover:bg-purple-50/50 dark:hover:border-purple-400 dark:hover:bg-purple-900/20"
       } backdrop-blur-sm shadow-lg`}
     >
       <CardContent {...getRootProps()} className="p-12 text-center">
@@ -71,10 +88,10 @@ export function ChatUpload({ onFileUpload, isAnalyzing }: ChatUploadProps) {
           </div>
 
           <div>
-            <h3 className="text-2xl font-semibold text-gray-800 mb-2">
+            <h3 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-2">
               {isDragActive ? "Drop your chat file here!" : "Upload Your WhatsApp Chat"}
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               Drag and drop your exported WhatsApp chat (.txt file) or click to browse
             </p>
           </div>
@@ -84,7 +101,26 @@ export function ChatUpload({ onFileUpload, isAnalyzing }: ChatUploadProps) {
             Choose File
           </Button>
 
-          <p className="text-sm text-gray-500">Supported format: .txt files from WhatsApp export</p>
+          {fileError && (
+            <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <div className="flex items-center">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <p className="text-sm text-red-800 dark:text-red-200">{fileError}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <p className="text-sm text-gray-500 dark:text-gray-400">Supported format: .txt files from WhatsApp export</p>
         </div>
       </CardContent>
     </Card>

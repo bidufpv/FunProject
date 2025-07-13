@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { ChatUpload } from "@/components/chat-upload"
 import { AnalysisResults } from "@/components/analysis-results"
 import { analyzeChatData, type ChatAnalysis } from "@/lib/chat-analyzer"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function Home() {
   const [analysis, setAnalysis] = useState<ChatAnalysis | null>(null)
@@ -33,7 +34,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -43,7 +44,10 @@ export default function Home() {
               Love Score
             </h1>
           </div>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="flex justify-center mb-4">
+            <ThemeToggle />
+          </div>
+          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Upload your WhatsApp chat and discover your relationship compatibility score! Analyze your conversations to
             see how much you and your partner connect.
           </p>
@@ -51,27 +55,29 @@ export default function Home() {
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <MessageCircle className="h-12 w-12 text-blue-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Message Analysis</h3>
-              <p className="text-gray-600">Analyze frequency, length, and patterns in your conversations</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Analyze frequency, length, and patterns in your conversations
+              </p>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <Smile className="h-12 w-12 text-yellow-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Emoji Insights</h3>
-              <p className="text-gray-600">Track love emojis and emotional expressions</p>
+              <p className="text-gray-600 dark:text-gray-300">Track love emojis and emotional expressions</p>
             </CardContent>
           </Card>
 
-          <Card className="border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="border-0 shadow-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
             <CardContent className="p-6 text-center">
               <Zap className="h-12 w-12 text-green-500 mx-auto mb-4" />
               <h3 className="text-lg font-semibold mb-2">Instant Results</h3>
-              <p className="text-gray-600">Get your Love Score and insights in seconds</p>
+              <p className="text-gray-600 dark:text-gray-300">Get your Love Score and insights in seconds</p>
             </CardContent>
           </Card>
         </div>
@@ -81,13 +87,13 @@ export default function Home() {
           <ChatUpload onFileUpload={handleFileUpload} isAnalyzing={isAnalyzing} />
 
           {/* Instructions */}
-          <Card className="mt-8 border-0 shadow-lg bg-white/70 backdrop-blur-sm">
+          <Card className="mt-8 border-0 shadow-lg bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm">
             <CardContent className="p-6">
               <h3 className="text-lg font-semibold mb-4 flex items-center">
                 <Upload className="h-5 w-5 mr-2 text-purple-500" />
                 How to export your WhatsApp chat:
               </h3>
-              <ol className="list-decimal list-inside space-y-2 text-gray-600">
+              <ol className="list-decimal list-inside space-y-2 text-gray-600 dark:text-gray-300">
                 <li>Open WhatsApp and go to the chat you want to analyze</li>
                 <li>Tap the contact/group name at the top</li>
                 <li>Scroll down and tap "Export Chat"</li>
